@@ -1,57 +1,1373 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <title>Landing Page - Titanic ML Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Titanic ML Project - Landing Page Científica. Análisis predictivo bajo la metodología CRISP-ML, Inteligencia Visual y Gemelos Digitales de Realidad Aumentada.">
+    <title>Titanic ML & Realidad Aumentada - Proyecto Ligia Elena Herrera</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Estilos -->
     <style>
+        :root {
+            --bg-dark: #030712;
+            --bg-deep: #0b0f19;
+            --bg-card: rgba(15, 23, 42, 0.65);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --primary: #00f2fe;
+            --primary-glow: rgba(0, 242, 254, 0.25);
+            --accent: #4facfe;
+            --accent-glow: rgba(79, 172, 254, 0.25);
+            --secondary: #ffd700;
+            --secondary-glow: rgba(255, 215, 0, 0.2);
+            --success: #10b981;
+            --text-light: #f3f4f6;
+            --text-gray: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(0, 242, 254, 0.3);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-title: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            margin: 40px;
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        h1,
-        h2 {
-            color: #0056b3;
+        /* Background animated gradient grid */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.04) 0%, transparent 45%),
+                radial-gradient(circle at 90% 80%, rgba(79, 172, 254, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(11, 15, 25, 0.9) 0%, var(--bg-dark) 100%);
+        }
+        
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            mask-image: radial-gradient(ellipse at 50% 50%, black 60%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 60%, transparent 100%);
+            opacity: 0.8;
         }
 
-        .grid {
+        header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 25px 20px;
             display: flex;
-            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
+        .logo {
+            font-family: var(--font-title);
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo span {
+            color: var(--accent);
+            -webkit-text-fill-color: var(--accent);
+        }
+
+        .author-badge {
+            background: rgba(0, 242, 254, 0.07);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            color: var(--primary);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 20px var(--primary-glow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .author-badge::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+
+        .author-badge:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px var(--primary);
+            cursor: pointer;
+            border-color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 70px 20px 40px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: var(--font-title);
+            font-size: 54px;
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #ffffff, #93c5fd, #c7d2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-gray);
+            font-size: 19px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Tabs Navigation */
+        .tabs-container {
+            max-width: 750px;
+            margin: 20px auto 45px auto;
+            padding: 0 20px;
+        }
+
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(10, 15, 30, 0.8);
+            padding: 6px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            padding: 14px 24px;
+            font-family: var(--font-title);
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+            text-align: center;
+            outline: none;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.1);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: none;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Glassmorphic Cards */
         .card {
-            border: 1px solid #ccc;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 40px;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            border-color: rgba(0, 242, 254, 0.15);
+        }
+
+        /* Section Titles */
+        .section-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-title);
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        /* Timeline (CRISP-ML) */
+        .timeline {
+            position: relative;
+            max-width: 950px;
+            margin: 30px auto 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary) 0%, var(--accent) 50%, rgba(79, 172, 254, 0.05) 100%);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 10px 45px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            right: -9px;
+            background-color: var(--bg-dark);
+            border: 3px solid var(--primary);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+            transition: var(--transition);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .timeline-item:hover::after {
+            background-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary);
+            transform: scale(1.3);
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .right::after { left: -9px; }
+
+        .timeline-content {
+            padding: 28px;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.03);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.05);
+        }
+
+        .timeline-step-badge {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 8px;
+            background: rgba(0, 242, 254, 0.1);
+            padding: 2px 10px;
+            border-radius: 5px;
+        }
+
+        .timeline-content h3 {
+            font-family: var(--font-title);
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: var(--text-gray);
+            font-size: 14.5px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Machine Learning Models Tab */
+        .models-intro {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.03) 0%, rgba(79, 172, 254, 0.03) 100%);
+            border: 1px solid rgba(0, 242, 254, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .models-intro-text h3 {
+            font-family: var(--font-title);
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .models-intro-text p {
+            color: var(--text-gray);
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        .models-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 35px;
+        }
+
+        .model-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .model-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 15px;
+        }
+
+        .model-title {
+            font-family: var(--font-title);
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .model-type-badge {
+            background: rgba(79, 172, 254, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .model-type-badge.classification {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .model-body p {
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            font-size: 15.5px;
+            line-height: 1.6;
+        }
+
+        .tech-math {
+            font-family: var(--font-mono);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
             padding: 15px;
-            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 13px;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tech-math span {
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .info-list-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-list-title.blue { color: var(--accent); }
+        .info-list-title.green { color: var(--success); }
+
+        .info-list {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+            font-size: 14.5px;
+            color: var(--text-gray);
+        }
+
+        .info-list li strong {
+            color: var(--text-light);
+        }
+
+        .info-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .info-list.green li::before { color: var(--success); }
+        .info-list.blue li::before { color: var(--accent); }
+
+        .metric-highlight {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            transition: var(--transition);
+        }
+
+        .metric-highlight:hover {
+            border-color: rgba(255, 215, 0, 0.25);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .metric-label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-label-txt {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .metric-desc {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .metric-value {
+            font-family: var(--font-title);
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--secondary);
+            text-shadow: 0 0 15px var(--secondary-glow);
+        }
+
+        /* Interactive Gallery Tab */
+        .gallery-filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            color: var(--text-gray);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .filter-btn.active {
+            background: rgba(0, 242, 254, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 242, 254, 0.12);
+        }
+
+        .gallery-img-container {
+            width: 100%;
+            height: 230px;
+            overflow: hidden;
+            position: relative;
+            background: #070c16;
+        }
+
+        .gallery-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover .gallery-img-container img {
+            transform: scale(1.08);
+        }
+
+        .gallery-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .gallery-info h3 {
+            font-family: var(--font-title);
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-info h3 {
+            color: var(--primary);
+        }
+
+        .gallery-info p {
+            font-size: 13.5px;
+            color: var(--text-gray);
+            font-weight: 300;
+            line-height: 1.5;
+        }
+
+        .gallery-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Author Highlight Card Section */
+        .author-section {
+            max-width: 1200px;
+            margin: 60px auto 20px auto;
+            padding: 0 20px;
+        }
+
+        .author-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.3) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .author-card::before {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.04) 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+            pointer-events: none;
+        }
+
+        .author-left {
+            max-width: 700px;
+        }
+
+        .author-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .author-left h3 {
+            font-family: var(--font-title);
+            font-size: 30px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .author-left p {
+            color: var(--text-gray);
+            font-size: 15.5px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .author-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-glow {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px var(--primary-glow);
+            font-weight: 900;
+            font-family: var(--font-title);
+            border: 4px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Image Modal Viewer */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content-wrapper {
+            position: relative;
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text-light);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-body-layout {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+        }
+
+        .modal-image-pane {
+            background: #02050b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 480px;
+            max-height: 600px;
+            padding: 10px;
+        }
+
+        .modal-image-pane img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .modal-desc-pane {
+            padding: 45px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 15, 30, 0.4);
+        }
+
+        .modal-desc-pane .badge {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--primary);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            width: fit-content;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-desc-pane h3 {
+            font-family: var(--font-title);
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            color: #ffffff;
+        }
+
+        .modal-desc-pane p {
+            color: var(--text-gray);
+            font-size: 15px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            max-width: 1200px;
+            margin: 70px auto 0 auto;
+            padding: 40px 20px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        footer strong {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Responsive Layouts */
+        @media (max-width: 992px) {
+            .models-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-body-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-desc-pane {
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 35px 25px;
+            }
+
+            .modal-image-pane {
+                min-height: 350px;
+                max-height: 450px;
+            }
+
+            .author-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 25px;
+                padding: 30px;
+            }
+
+            .author-left {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+            }
+
+            .timeline-item::after {
+                left: 22px;
+                right: auto;
+            }
+
+            .right {
+                left: 0%;
+            }
+
+            .right::after {
+                left: 22px;
+            }
+
+            .tab-btn {
+                padding: 11px 12px;
+                font-size: 13.5px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>Proyecto Titanic: Machine Learning e Inteligencia Visual</h1>
-    <p>Este proyecto implementa modelos supervisados para entender y predecir variables del histórico naufragio.</p>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
 
-    <h2>Ciclo de Vida del Proyecto (CRISP-ML)</h2>
-    <ul>
-        <li><strong>1. Comprensión del Negocio:</strong> Enfoque predictivo de supervivencia y costos de pasajes.</li>
-        <li><strong>2. Comprensión de Datos:</strong> Análisis del dataset histórico del Titanic.</li>
-        <li><strong>3. Preparación de Datos:</strong> Limpieza de nulos y codificación con Python.</li>
-        <li><strong>4. Modelado y Evaluación:</strong> Creación de algoritmos con Scikit-Learn.</li>
-    </ul>
+    <header>
+        <div class="logo">
+            🚢 Titanic<span>ML</span>
+        </div>
+        <div class="author-badge" onclick="scrollToAuthor()">
+            Ligia Elena Herrera
+        </div>
+    </header>
 
-    <h2>Impacto Visual con Realidad Aumentada (RA)</h2>
-    <div class="grid">
-        <div>
-            <p>Visualización interactiva mediante hologramas móviles para simular escenarios de evacuación o análisis de
-                la estructura del barco:</p>
-            <img src="Realidad Aumentada/tu_imagen_ra 1.png" alt="Visualización RA del Titanic" width="400">
-            <img src="Realidad Aumentada/tu_imagen_ra 2.png" alt="Visualización RA del Titanic" width="400">
-            <img src="Realidad Aumentada/tu_imagen_ra 3.png" alt="Visualización RA del Titanic" width="400">
+    <main>
+        <section class="hero">
+            <h1>Ciencia de Datos e Inteligencia Visual Inmersiva</h1>
+            <p>Una plataforma interactiva que fusiona algoritmos supervisados de Machine Learning con conceptos de Inteligencia Visual para comprender, modelar y simular las dinámicas demográficas del histórico siniestro del Titanic.</p>
+        </section>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs-container">
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="switchTab('crisp-ml')" id="tab-btn-crisp-ml">Ciclo CRISP-ML</button>
+                <button class="tab-btn" onclick="switchTab('models')" id="tab-btn-models">Modelos ML</button>
+                <button class="tab-btn" onclick="switchTab('gallery')" id="tab-btn-gallery">Galería Inmersiva</button>
+            </div>
+        </div>
+
+        <!-- Tab 1: CRISP-ML -->
+        <section class="tab-content active" id="content-crisp-ml">
+            <div class="card">
+                <div class="section-header">
+                    <h2>Metodología Científica CRISP-ML</h2>
+                    <p>El desarrollo del proyecto predictivo se estructuró bajo el estándar de la industria para garantizar la robustez, interpretabilidad y calidad del ciclo de vida analítico.</p>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <span class="timeline-step-badge">Fase 1</span>
+                            <h3>Comprensión del Negocio</h3>
+                            <p>Definición del enfoque dual del proyecto: clasificar con precisión la probabilidad de supervivencia individual y, paralelamente, modelar y estimar el costo económico de las tarifas en función de los perfiles de los pasajeros.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <span class="timeline-step-badge">Fase 2</span>
+                            <h3>Comprensión de los Datos</h3>
+                            <p>Análisis exploratorio exhaustivo del dataset del Titanic. Identificación de correlaciones clave, desequilibrios en las clases y de variables críticas de impacto como el género, clase social, edad y tarifa pagada.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <span class="timeline-step-badge">Fase 3</span>
+                            <h3>Preparación de los Datos</h3>
+                            <p>Tratamiento de valores faltantes (imputación mediana en edad), recodificación categórica (binarización del género) y filtrado de outliers en tarifas para reducir el ruido en el entrenamiento de los algoritmos.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <span class="timeline-step-badge">Fase 4</span>
+                            <h3>Modelado Predictivo</h3>
+                            <p>Entrenamiento y validación cruzada de múltiples algoritmos. Se implementó una Regresión Logística para la clasificación de supervivencia y una Regresión Lineal para la predicción de valor numérico de la tarifa.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item left">
+                        <div class="timeline-content">
+                            <span class="timeline-step-badge">Fase 5</span>
+                            <h3>Evaluación de Modelos</h3>
+                            <p>Validación en datos no vistos (Split 80/20). Evaluación con métricas clave: precisión global para clasificación (Accuracy de 80.45%) y varianza explicada para regresión (coeficiente R² de 33.87%).</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item right">
+                        <div class="timeline-content">
+                            <span class="timeline-step-badge">Fase 6</span>
+                            <h3>Despliegue e Interfaz</h3>
+                            <p>Construcción de un simulador web interactivo en tiempo real con la librería Streamlit que ejecuta los modelos guardados y permite evaluar perfiles hipotéticos de pasajeros de forma interactiva.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Machine Learning Models -->
+        <section class="tab-content" id="content-models">
+            <div class="models-intro">
+                <div class="models-intro-text">
+                    <h3>Modelado Estadístico y Supervisado</h3>
+                    <p>El proyecto combina dos familias de modelos supervisados (Clasificación y Regresión) para analizar el desastre desde dos perspectivas complementarias: la humana (supervivencia) y la socioeconómica (costo de boletos).</p>
+                </div>
+            </div>
+
+            <div class="models-grid">
+                <!-- Modelo de Regresión Logística -->
+                <div class="card model-card">
+                    <div>
+                        <div class="model-header">
+                            <h2 class="model-title">Regresión Logística</h2>
+                            <span class="model-type-badge classification">Clasificación</span>
+                        </div>
+                        <div class="model-body">
+                            <p>Este algoritmo clasifica de forma probabilística si un pasajero sobreviviría o no. Mapea una combinación lineal de las características del pasajero mediante la función logística (sigmoide) para obtener valores entre 0 y 1.</p>
+                            
+                            <div class="tech-math">
+                                <span>Ecuación Logística General</span>
+                                P(Y=1|X) = 1 / (1 + e^-(β0 + β1*Pclass + β2*Sex + β3*Age + β4*Fare))
+                            </div>
+
+                            <h4 class="info-list-title green">Variables de Entrada (Features):</h4>
+                            <ul class="info-list green">
+                                <li><strong>Clase de Pasajero (Pclass):</strong> 1ª, 2ª o 3ª clase (Variable ordinal).</li>
+                                <li><strong>Género (Sex):</strong> Binarizado (Mujer = 1, Hombre = 0).</li>
+                                <li><strong>Edad (Age):</strong> Valor continuo.</li>
+                                <li><strong>Tarifa (Fare):</strong> Costo pagado por el boleto.</li>
+                            </ul>
+
+                            <h4 class="info-list-title green">Objetivo de Predicción:</h4>
+                            <ul class="info-list green">
+                                <li><strong>Supervivencia (Survived):</strong> Clase 1 (Sobrevives) o Clase 0 (Falleces).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <div class="metric-label">
+                            <span class="metric-label-txt">Precisión Global (Accuracy)</span>
+                            <span class="metric-desc">Tasa de acierto del modelo en Test</span>
+                        </div>
+                        <span class="metric-value">80.45%</span>
+                    </div>
+                </div>
+
+                <!-- Modelo de Regresión Lineal -->
+                <div class="card model-card">
+                    <div>
+                        <div class="model-header">
+                            <h2 class="model-title">Regresión Lineal</h2>
+                            <span class="model-type-badge">Regresión</span>
+                        </div>
+                        <div class="model-body">
+                            <p>Este modelo lineal estima el costo justo que debió pagarse por un boleto según el perfil del pasajero, permitiendo analizar la diferencia entre las tarifas cobradas e identificar posibles cobros excesivos históricos.</p>
+                            
+                            <div class="tech-math">
+                                <span>Fórmula de Ajuste Multilineal</span>
+                                Fare = β0 + β1*Pclass + β2*Sex + β3*Age + β4*Survived
+                            </div>
+
+                            <h4 class="info-list-title blue">Variables de Entrada (Features):</h4>
+                            <ul class="info-list blue">
+                                <li><strong>Clase de Pasajero (Pclass):</strong> Factor crítico socioeconómico.</li>
+                                <li><strong>Género (Sex):</strong> Impacto demográfico en la asignación de boletos.</li>
+                                <li><strong>Edad (Age):</strong> Edad del pasajero.</li>
+                                <li><strong>Supervivencia (Survived):</strong> Si el pasajero sobrevivió al naufragio.</li>
+                            </ul>
+
+                            <h4 class="info-list-title blue">Objetivo de Predicción:</h4>
+                            <ul class="info-list blue">
+                                <li><strong>Tarifa Estimada (Fare):</strong> Valor numérico continuo proyectado en USD.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="metric-highlight">
+                        <div class="metric-label">
+                            <span class="metric-label-txt">Varianza Explicada (R²)</span>
+                            <span class="metric-desc">Capacidad predictiva de la tarifa estimada</span>
+                        </div>
+                        <span class="metric-value">33.87%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Interactive Gallery -->
+        <section class="tab-content" id="content-gallery">
+            <div class="section-header">
+                <h2>Gemelos Digitales e Inteligencia Visual</h2>
+                <p>Visualiza y explora las recreaciones virtuales en Realidad Aumentada y los diagramas analíticos integrados para la interpretación del proyecto.</p>
+            </div>
+
+            <!-- Filtros de la Galería -->
+            <div class="gallery-filter-container">
+                <button class="filter-btn active" onclick="filterGallery('todos')">Todos</button>
+                <button class="filter-btn" onclick="filterGallery('ra')">Hologramas RA</button>
+                <button class="filter-btn" onclick="filterGallery('simulacion')">Modelados & Simulación</button>
+                <button class="filter-btn" onclick="filterGallery('analisis')">Analítica & ML</button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item" data-category="ra" onclick="openModal('Realidad Aumentada/tu_imagen_ra 1.png', 'Estructura Holográfica del Titanic', 'Simulación tridimensional interactiva que proyecta la estructura externa y las cubiertas del barco. Ayuda a visualizar las diferentes áreas asignadas a las clases de pasajeros, permitiendo entender espacialmente la distribución física del barco.')">
+                    <div class="gallery-badge">Holograma RA</div>
+                    <div class="gallery-img-container">
+                        <img src="Realidad Aumentada/tu_imagen_ra 1.png" alt="Estructura Holográfica del Titanic">
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Estructura Holográfica del Titanic</h3>
+                        <p>Visualización 3D interactiva del barco mediante dispositivos móviles...</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item" data-category="simulacion" onclick="openModal('Realidad Aumentada/tu_imagen_ra 2.png', 'Simulación de Flujos de Evacuación', 'Modelado inmersivo en realidad aumentada que superpone rutas de escape virtuales y cuellos de botella en los pasillos principales. Muestra cómo la disposición interna influyó directamente en las tasas de supervivencia de las cubiertas inferiores.')">
+                    <div class="gallery-badge">Simulación</div>
+                    <div class="gallery-img-container">
+                        <img src="Realidad Aumentada/tu_imagen_ra 2.png" alt="Simulación de Evacuación">
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Simulación de Evacuación</h3>
+                        <p>Rutas de escape superpuestas en un entorno de realidad mixta...</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item" data-category="simulacion" onclick="openModal('Realidad Aumentada/tu_imagen_ra 3.png', 'Puntos de Quiebre Estructural', 'Visualización detallada en RA del punto de quiebre estructural del Titanic. Este modelo permite estudiar el impacto físico del iceberg y la posterior inundación de los compartimentos estancos en tiempo real.')">
+                    <div class="gallery-badge">Simulación</div>
+                    <div class="gallery-img-container">
+                        <img src="Realidad Aumentada/tu_imagen_ra 3.png" alt="Análisis Estructural">
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Puntos de Quiebre Estructural</h3>
+                        <p>Análisis forense de la colisión proyectado en entornos virtuales...</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item" data-category="ra" onclick="openModal('Realidad Aumentada/titanic_digital_twin.png', 'Gemelo Digital con Overlay Analítico', 'Representación futurista de un gemelo digital del Titanic en un entorno de laboratorio técnico de analistas. Muestra HUDs de datos estadísticos y métricas de Machine Learning proyectadas directamente sobre la silueta tridimensional holográfica del barco.')">
+                    <div class="gallery-badge">Holograma RA</div>
+                    <div class="gallery-img-container">
+                        <img src="Realidad Aumentada/titanic_digital_twin.png" alt="Gemelo Digital con Overlay Analítico">
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Gemelo Digital con HUD</h3>
+                        <p>Visualización de analítica avanzada sobre la estructura holográfica del Titanic...</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item" data-category="analisis" onclick="openModal('Realidad Aumentada/titanic_analytics_dashboard.png', 'Panel Analítico de Modelos', 'Panel premium interactivo que consolida la analítica del dataset del Titanic, mostrando gráficos de supervivencia por género y clase social, facilitando la comprensión de los pesos matemáticos dentro de los modelos supervisados.')">
+                    <div class="gallery-badge">Analítica</div>
+                    <div class="gallery-img-container">
+                        <img src="Realidad Aumentada/titanic_analytics_dashboard.png" alt="Dashboard de Modelado ML">
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Panel Analítico de Modelos</h3>
+                        <p>Visualización de correlaciones, métricas de precisión e históricos de datos...</p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6 (NUEVA IMAGEN DE VALOR) -->
+                <div class="gallery-item" data-category="analisis" onclick="openModal('Realidad Aumentada/titanic_ml_pipeline.png', 'Esquema de Flujo y Pipeline ML', 'Visualización conceptual de la arquitectura de datos del proyecto Titanic ML. Ilustra el paso de las variables de entrada por los modelos supervisados y el renderizado final de métricas estadísticas en la interfaz inmersiva.')">
+                    <div class="gallery-badge">Analítica</div>
+                    <div class="gallery-img-container">
+                        <img src="Realidad Aumentada/titanic_ml_pipeline.png" alt="Esquema de Flujo y Pipeline ML">
+                    </div>
+                    <div class="gallery-info">
+                        <h3>Pipeline Analítico & Variables</h3>
+                        <p>Flujo lógico del procesamiento de datos y entrenamiento de modelos...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Author Spotlight Card -->
+        <section class="author-section" id="author-spotlight">
+            <div class="author-card">
+                <div class="author-left">
+                    <span class="author-label">Directora del Proyecto</span>
+                    <h3>Ligia Elena Herrera</h3>
+                    <p>Científica de Datos y Diseñadora de Interfaces Inmersivas. Su investigación e implementación técnica unifican el modelado matemático supervisado de Machine Learning con tecnologías inmersivas de Realidad Aumentada para crear simuladores interactivos de alto impacto educativo e histórico.</p>
+                </div>
+                <div class="author-right">
+                    <div class="avatar-glow">LH</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Viewer -->
+    <div class="modal" id="imageModal" onclick="closeModalOnOuterClick(event)">
+        <div class="modal-content-wrapper">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-body-layout">
+                <div class="modal-image-pane">
+                    <img id="modalImg" src="" alt="Vista Previa de Imagen">
+                </div>
+                <div class="modal-desc-pane">
+                    <span class="badge" id="modalBadge">Tecnología</span>
+                    <h3 id="modalTitle">Título de la Imagen</h3>
+                    <p id="modalDesc">Descripción larga explicativa de la tecnología y cómo aporta valor a la comprensión científica del Titanic.</p>
+                </div>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <p>Proyecto Titanic ML e Inteligencia Visual | Creado por <strong>Ligia Elena Herrera</strong> © 2026</p>
+    </footer>
+
+    <!-- JS Logic -->
+    <script>
+        function switchTab(tabId) {
+            // Remove active classes
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Add active classes
+            document.getElementById('tab-btn-' + tabId).classList.add('active');
+            document.getElementById('content-' + tabId).classList.add('active');
+        }
+
+        function filterGallery(category) {
+            // Activar botón de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Buscar el elemento que originó el evento
+            if(event && event.target) {
+                event.target.classList.add('active');
+            }
+
+            // Filtrar tarjetas
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                if (category === 'todos' || item.getAttribute('data-category') === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openModal(imgSrc, title, description) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const modalBadge = document.getElementById('modalBadge');
+
+            modalImg.src = imgSrc;
+            modalImg.alt = title;
+            modalTitle.innerText = title;
+            modalDesc.innerText = description;
+
+            // Determinar categoría por título
+            if (title.includes('Holográfica') || title.includes('HUD') || title.includes('Gemelo')) {
+                modalBadge.innerText = 'Holograma RA';
+            } else if (title.includes('Evacuación') || title.includes('Quiebre')) {
+                modalBadge.innerText = 'Modelado e Inmersión';
+            } else {
+                modalBadge.innerText = 'Analítica & Machine Learning';
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent main page scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function closeModalOnOuterClick(event) {
+            const wrapper = document.querySelector('.modal-content-wrapper');
+            if (!wrapper.contains(event.target) && event.target.id === 'imageModal') {
+                closeModal();
+            }
+        }
+
+        function scrollToAuthor() {
+            document.getElementById('author-spotlight').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
 </body>
 
 </html>
